@@ -1,3 +1,26 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /page/1
+    controller: App\Controller\MainController::first
+
+page2:
+    path: /page/2
+    controller: App\Controller\MainController::second
+
+
+api:
+    path: /api/
+    controller: App\Controller\UserController::index
+add:
+    path: /api/addUser
+    controller: App\Controller\UserController::addUser
+    methods: [POST]
+
+remove:
+    path: /api/removeUser/{name}
+    controller: App\Controller\UserController::removeUser
+    methods: [DELETE]
+
+update:
+    path: /api/updateUser/{name}
+    controller: App\Controller\UserController::updateUser
+    methods: [PUT]

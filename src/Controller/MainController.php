@@ -3,25 +3,21 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MainController extends AbstractController
 {
-    /**
-     * @Route("/page/1")
-     */
-    public function action(): Response
-    {
 
-        return $this->render('User/firstWelcome.html.twig');
+
+    public function first(UserInterface $user): Response
+    {
+        return $this->render('User/firstWelcome.html.twig',
+            ['username' => $user->getUsername()]);
     }
 
-    /**
-     * @Route("/page/2")
-     */
-    public function second(): Response
+    public function second(UserInterface $user): Response
     {
-
-        return $this->render('User/secondWelcome.html.twig');
+        return $this->render('User/secondWelcome.html.twig',
+            ['username' => $user->getUsername()]);
     }
 }

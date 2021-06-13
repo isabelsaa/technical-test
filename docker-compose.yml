@@ -5,13 +5,24 @@ services:
         volumes:
             - ./:/app
         working_dir: /app
+        extra_hosts:
+            host: 127.0.0.1
+        networks:
+            front:
+                aliases:
+                    - api.dev
+
     server:
         image: nginx
         ports: 
             - 8000:80
         volumes:
             - ./nginx/conf.d/:/etc/nginx/conf.d
-    bd: 
+        networks:
+            front:
+                aliases:
+                    - api.dev
+    bd:
         image: mysql:5.7
         environment:
             - MYSQL_ROOT_PASSWORD=admin
@@ -20,6 +31,9 @@ services:
             - symfony-data:/var/lib/mysql
 
 
-    
 volumes:
     symfony-data:
+
+
+networks:
+    front:
