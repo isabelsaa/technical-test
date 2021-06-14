@@ -29,6 +29,10 @@ services:
             - MYSQL_DATABASE=prueba
         volumes:
             - symfony-data:/var/lib/mysql
+        networks:
+            front:
+                aliases:
+                    - api.dev
 
 
 volumes:

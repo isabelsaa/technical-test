@@ -9,18 +9,18 @@ page2:
 
 api:
     path: /api/
-    controller: App\Controller\UserController::index
+    controller: App\Controller\UserApiController::index
 add:
     path: /api/addUser
-    controller: App\Controller\UserController::addUser
+    controller: App\Controller\UserApiController::addUser
     methods: [POST]
 
 remove:
     path: /api/removeUser/{name}
-    controller: App\Controller\UserController::removeUser
+    controller: App\Controller\UserApiController::removeUser
     methods: [DELETE]
 
 update:
     path: /api/updateUser/{name}
-    controller: App\Controller\UserController::updateUser
+    controller: App\Controller\UserApiController::updateUser
     methods: [PUT]

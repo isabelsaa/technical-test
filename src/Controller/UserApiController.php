@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Repository\UserRepository;
@@ -6,9 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class UserController extends AbstractController
+class UserApiController extends AbstractController
 {
 
     private UserRepository $userRepository;
@@ -19,45 +20,45 @@ class UserController extends AbstractController
     }
 
 
-    public function index() :Response
+    public function index(): Response
     {
         return new Response(
             '<p>Mi API</p>'
         );
     }
+
     /**
      * @param Request $request
      * @return JsonResponse
+     * @throws \HttpException
      */
-    public function addUser (Request $request) :JsonResponse
+    public function addUser(Request $request): JsonResponse
     {
 
         $data = json_decode($request->getContent(), true);
-
-        if (empty($name) || empty($userName) || empty($password) || empty($roles))
-        {
-            throw new NotFoundHttpException("You must add this parameters");
+        if (empty($data)) {
+            throw new HttpException(204, "You must add this parameters");
         }
-        $name =$data['name'];
-        $userName =$data['username'];
-        $password =$data['password'];
-        $roles =$data['roles'];
+        $name = $data['name'];
+        $userName = $data['username'];
+        $password = $data['password'];
+        $roles = $data['roles'];
 
         $this->userRepository->saveUser($name, $userName, $password, $roles);
 
-        return new JsonResponse(['status'=> 'New User created'], Response::HTTP_CREATED);
+        return new JsonResponse(['status' => 'New User created'], Response::HTTP_CREATED);
     }
 
     /**
      * @param $name
      * @return JsonResponse
      */
-    public function removeUser($name) :JsonResponse
+    public function removeUser($name): JsonResponse
     {
-        $user = $this->userRepository->findOneBy(['name'=>$name]);
+        $user = $this->userRepository->findOneBy(['name' => $name]);
         $this->userRepository->deleteUser($user);
 
-        return new JsonResponse(['status'=> 'User deleted'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'User deleted'], Response::HTTP_OK);
     }
 
 
@@ -66,9 +67,9 @@ class UserController extends AbstractController
      * @param $name
      * @return JsonResponse
      */
-    public function updateUser(Request $request, $name) :JsonResponse
+    public function updateUser(Request $request, $name): JsonResponse
     {
-        $user = $this->userRepository->findOneBy(['name'=>$name]);
+        $user = $this->userRepository->findOneBy(['name' => $name]);
         $data = json_decode($request->getContent(), true);
         empty($data['name']) ? true : $user->setName($data['name']);
         empty($data['username']) ? true : $user->setName($data['username']);
@@ -77,6 +78,6 @@ class UserController extends AbstractController
 
         $this->userRepository->updateUser($user);
 
-        return new JsonResponse(['status'=> 'User updated'], Response::HTTP_OK);
+        return new JsonResponse(['status' => 'User updated'], Response::HTTP_OK);
     }
 }
