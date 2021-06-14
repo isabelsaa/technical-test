@@ -1,12 +1,12 @@
+root:
+    path: /
+    controller: App\Controller\MainController::main
 index:
     path: /page/1
     controller: App\Controller\MainController::first
-
-page2:
+second:
     path: /page/2
     controller: App\Controller\MainController::second
-
-
 api:
     path: /api/
     controller: App\Controller\UserApiController::index
@@ -14,12 +14,10 @@ add:
     path: /api/addUser
     controller: App\Controller\UserApiController::addUser
     methods: [POST]
-
 remove:
     path: /api/removeUser/{name}
     controller: App\Controller\UserApiController::removeUser
     methods: [DELETE]
-
 update:
     path: /api/updateUser/{name}
     controller: App\Controller\UserApiController::updateUser

@@ -16,7 +16,7 @@ security:
                         password: admin
                         roles: ROLE_PAGE_1
     role_hierarchy:
-        ROLE_ADMIN: ROLE_PAGE_1
+        ROLE_ADMIN: ROLE_PAGE_1, ROLE_PAGE_2
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/

@@ -19,7 +19,6 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticator;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
-
 class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator
 {
     use TargetPathTrait;
@@ -59,12 +58,8 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator
         return $credentials;
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): object|null
     {
-        $token = new CsrfToken('authenticate', $credentials['csrf_token']);
-        if (!$this->csrfTokenManager->isTokenValid($token)) {
-            throw new InvalidCsrfTokenException();
-        }
 
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
@@ -79,8 +74,9 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator
     {
         // Check the user's password or other credentials and return true or false
         // If there are no credentials to check, you can just return true
-        if ($user->getPassword() == $credentials['password'])
-        {
+
+
+        if ($user->getPassword() == $credentials['password']) {
             return true;
         }
 
@@ -94,8 +90,15 @@ class LoginCustomAuthenticator extends AbstractFormLoginAuthenticator
         if ($targetPath = $this->getTargetPath($request->getSession(), $providerKey)) {
             return new RedirectResponse($targetPath);
         }
+        if ($token->getUser()->getRoles() == ['ROLE_PAGE_1']) {
+            return new RedirectResponse($this->urlGenerator->generate('index'));
+        }
 
+        if ($token->getUser()->getRoles() == ['ROLE_PAGE_2']) {
+            return new RedirectResponse($this->urlGenerator->generate('second'));
+        }
         return new RedirectResponse($this->urlGenerator->generate('index'));
+
         //throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

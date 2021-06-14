@@ -5,13 +5,13 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
 class User implements UserInterface
 {
-    
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -45,7 +45,7 @@ class User implements UserInterface
         // see section on salt below
         return null;
     }
-    
+
     public function eraseCredentials()
     {
     }
@@ -53,6 +53,13 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): static
+    {
+        $this->id = $id;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -93,7 +100,7 @@ class User implements UserInterface
 
     public function getRoles(): ?array
     {
-        return explode(' ' ,$this->roles);
+        return explode(' ', $this->roles);
     }
 
     public function setRoles(string $roles): self
