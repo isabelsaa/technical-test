@@ -24,16 +24,18 @@ services:
                     - api.dev
     bd:
         image: mysql:5.7
+        command: --default-authentication-plugin=mysql_native_password
         environment:
             - MYSQL_ROOT_PASSWORD=admin
             - MYSQL_DATABASE=prueba
         volumes:
-            - symfony-data:/var/lib/mysql
+            - ./var:/var/lib/mysql
+            - ./init:/docker-entrypoint-initdb.d
         networks:
             front:
                 aliases:
                     - api.dev
-volumes:
-    symfony-data:
 networks:
     front:
+
+

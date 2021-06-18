@@ -55,7 +55,10 @@ class UserApiController extends AbstractController
     public function removeUser($name): JsonResponse
     {
         $user = $this->userRepository->findOneBy(['name' => $name]);
-        $this->userRepository->deleteUser($user);
+        try {
+            $this->userRepository->deleteUser($user);
+        } catch (OptimisticLockException | ORMException $e) {
+        }
 
         return new JsonResponse(['status' => 'User deleted'], Response::HTTP_OK);
     }
@@ -70,10 +73,11 @@ class UserApiController extends AbstractController
     {
         $user = $this->userRepository->findOneBy(['name' => $name]);
         $data = json_decode($request->getContent(), true);
+
         empty($data['name']) ? true : $user->setName($data['name']);
-        empty($data['username']) ? true : $user->setName($data['username']);
-        empty($data['password']) ? true : $user->setName($data['password']);
-        empty($data['roles']) ? true : $user->setName($data['roles']);
+        empty($data['username']) ? true : $user->setUsername($data['username']);
+        empty($data['password']) ? true : $user->setPassword($data['password']);
+        empty($data['roles']) ? true : $user->setRoles($data['roles']);
 
         try {
             $this->userRepository->updateUser($user);

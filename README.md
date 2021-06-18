@@ -4,15 +4,21 @@
 
 First you have to bring up your docker containers:
 
-you have a Makefile to start the container
+you have a Makefile to start the container:
 
-Inside the app container make
+`make start`
 
+Inside the app container (technical-test_app_1):
+With sudo 
+
+`docker exec -it {containerName} sh`
+
+make:
 `composer install`
 
-You may have to clean cache inside docker
+Then you must migrate:
 
-```/bin/console c:c```
+`bin/console doctrine:migrate:migrate`
 
 
 To use the API you may use a HTTP client as POSTMAN or similar
@@ -21,6 +27,7 @@ To use the API you may use a HTTP client as POSTMAN or similar
 127.0.0.1:8000/api/AddUser
 
 In the body you must add the body content in JSON format
+(remember previously add the auth user you find in the security.yml)
 
 `{
 "name": "user2",
@@ -28,10 +35,11 @@ In the body you must add the body content in JSON format
 "password": "test",
 "roles": "ROLE_ADMIN"
 }`
+
 It will return 201
 
 To update you may add the name of the user to update
-127.0.0.1:8000/api/AddUser/{name}
+127.0.0.1:8000/api/updateUser/{name}
 and add in the body as JSON what do you like to change
 
 `{
@@ -41,7 +49,7 @@ and add in the body as JSON what do you like to change
 It will return 200
 
 To delete user
-127.0.0.1:8000/api/deleteUser/{name}
+127.0.0.1:8000/api/removeUser/{name}
 It will return 200
 
 
@@ -54,7 +62,7 @@ To run the test you must enter in the container app and execute
 
 `./vendor/bin/simple-phpunit`
 
-Don worry about exceptions, that is absolutely normal.
+Dont worry about exceptions, that is absolutely normal.
 ****
 **Code Styles**
 
