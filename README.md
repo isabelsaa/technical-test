@@ -4,7 +4,8 @@
 
 First you have to bring up your docker containers:
 
-`docker-compose up -d --build --remove-orphans`
+you have a Makefile to start the container
+
 
 You may have to clean cache inside docker
 
@@ -39,3 +40,21 @@ It will return 200
 To delete user
 127.0.0.1:8000/api/deleteUser/{name}
 It will return 200
+
+**TESTS**
+
+To run the test you must enter in the container app and execute 
+
+`php bin/phpunit`
+
+****
+**Code Styles**
+
+You have phpcs fixer and phpMD also!!
+You must execute in app container:
+
+```tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src/```
+
+```./vendor/bin/phpmd src/ text vendor/phpmd/phpmd/phpcs.xml```
+
+

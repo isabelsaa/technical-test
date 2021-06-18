@@ -33,11 +33,7 @@ services:
             front:
                 aliases:
                     - api.dev
-
-
 volumes:
     symfony-data:
-
-
 networks:
     front:

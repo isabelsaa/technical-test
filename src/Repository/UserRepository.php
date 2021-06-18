@@ -52,17 +52,4 @@ class UserRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
         return $user;
     }
-
-
-    /*
-    public function findOneBySomeField($value): ?User
-    {
-        return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }
