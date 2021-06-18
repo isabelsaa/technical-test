@@ -6,6 +6,9 @@ First you have to bring up your docker containers:
 
 you have a Makefile to start the container
 
+Inside the app container make
+
+`composer install`
 
 You may have to clean cache inside docker
 
@@ -41,12 +44,17 @@ To delete user
 127.0.0.1:8000/api/deleteUser/{name}
 It will return 200
 
+
+**DATABASES**
+There are two databases, one prueba and another prueba_test
+
 **TESTS**
 
 To run the test you must enter in the container app and execute 
 
-`php bin/phpunit`
+`./vendor/bin/simple-phpunit`
 
+Don worry about exceptions, that is absolutely normal.
 ****
 **Code Styles**
 
